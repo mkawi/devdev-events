@@ -3,14 +3,15 @@ import { EventCard } from "@/components/EventCard";
 import EventCardGrid from "@/components/EventCardGrid";
 import { createClient } from "@/lib/supabase/server";
 
-const supabase = createClient()
-let { data: events, error } = await supabase
-    .from('events')
-    .select('*')
-    .gte('end_date', new Date().toISOString())
-    .order('start_date', { ascending: true })
 
-export default function Events() {
+export default async function Events() {
+    const supabase = createClient()
+    let { data: events, error } = await supabase
+        .from('events')
+        .select('*')
+        .gte('end_date', new Date().toISOString())
+        .order('start_date', { ascending: true })
+
     return (
         <>
             <Banner title="Latest Events" />
