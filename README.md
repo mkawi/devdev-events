@@ -2,6 +2,8 @@
 
 A events platform focused on helping developers discover tech-related meetups & hackathons.
 
+https://devdev-events.vercel.app/
+
 ## Getting Started
 
 First, clone the repository:
