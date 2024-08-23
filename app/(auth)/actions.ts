@@ -16,7 +16,9 @@ export async function login(formData: FormData) {
     const { error } = await supabase.auth.signInWithPassword(data)
 
     if (error) {
-        redirect('/error')
+        throw new Error(
+            "Invalid login credentials",
+        )
     }
 
     revalidatePath('/', 'layout')
@@ -28,7 +30,7 @@ export async function signOut() {
     const { error } = await supabase.auth.signOut()
 
     if (error) {
-        redirect('/error')
+        console.log(error)
     }
 
     revalidatePath('/login', 'layout')
@@ -52,7 +54,7 @@ export async function signup(formData: FormData) {
     const { error } = await supabase.auth.signUp(data)
 
     if (error) {
-        redirect('/error')
+        console.log(error)
     }
 
     revalidatePath('/', 'layout')
@@ -78,7 +80,7 @@ export async function addEvent(date: { from: Date, to: Date }, formData: FormDat
         .insert(data)
 
     if (error) {
-        redirect('/error')
+        console.log(error)
     }
 
     revalidatePath('/events', 'layout')
@@ -90,8 +92,7 @@ export async function subscribeEvent(event_id, formData) {
     const { data: { user } } = await supabase.auth.getUser()
 
     if (!user) {
-        console.log("ERROR: ", user)
-        redirect('/error')
+        throw new Error("User not logged in")
     }
 
     const data = {
@@ -104,7 +105,7 @@ export async function subscribeEvent(event_id, formData) {
         .insert(data)
 
     if (error) {
-        redirect('/error')
+        console.log("ERROR: ", error)
     }
 
     revalidatePath('/events', 'layout')

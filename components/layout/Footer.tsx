@@ -13,7 +13,7 @@ export function Footer() {
           Get in touch
         </a>{" "}
         –{" "}
-        <a href="https://github.com/mkawi" className="text-gray-500 underline">
+        <a href="https://github.com/mkawi/devdev-events" className="text-gray-500 underline">
           Open source on GitHub
         </a>
       </p>
