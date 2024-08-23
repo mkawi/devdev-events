@@ -4,6 +4,7 @@ A events platform focused on helping developers discover tech-related meetups & 
 
 https://devdev-events.vercel.app/
 
+
 ## Getting Started
 
 First, clone the repository:
@@ -27,6 +28,7 @@ npm run dev
 
 And finally open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+
 ## Login Details
 
 Username: staff@example.com
@@ -42,3 +44,4 @@ TypeScript
 React + Nextjs 
 Tailwind 
 Supabase DB + Auth
+
