@@ -7,18 +7,19 @@ import { PurchaseTickets } from "@/components/PurchaseTickets";
 import { createClient } from "@/lib/supabase/server";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: { id: string } }) {
     const supabase = createClient()
+
+    const { data: { user } } = await supabase.auth.getUser()
     let { data: event, error } = await supabase
         .from('events')
         .select('*')
         .eq("id", params.id)
 
     if (error?.code === "22P02" || event?.length === 0) {
-        return (
-            <h1>404 - Sorry but this event doesn't exist</h1>
-        )
+        notFound()
     }
 
     const [content] = event
@@ -57,7 +58,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                                 </p>
                             </div>
                             <div className="flex flex-col md:flex-row gap-4 pt-8">
-                                <PurchaseTickets event={content} />
+                                {user && <PurchaseTickets event={content} />}
                                 <Button size="lg" variant="outline" className="w-full md:w-auto" asChild>
                                     <Link href={`https://www.google.com/calendar/render?action=TEMPLATE&text=${content.title}&dates=${content.start_date.replaceAll("-", "")}/${content.end_date.replaceAll("-", "")}&location=${content.location}`} target="_blank">
                                         <CalendarIcon className="mr-2 h-4 w-4" />
